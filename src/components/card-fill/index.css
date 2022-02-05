@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.main{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* Carta--------------------------------------------------------------------- */
+.card{
+    /* Estilo */
+    width: 12.9cm;
+    height: 19.6cm;
+    margin: 50px 0;
+    background-color: white;
+    border: solid white .3cm;
+    box-shadow: 3px 3px 5px black, 
+                -3px -3px 5px black;
+   
+
+    /* Propiedades de grid */
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(4,1fr);
+    row-gap: .5cm;
+    column-gap: .3cm;
+
+}
+
+
+.item{
+
+    position: relative;
+    border: solid 2px black;
+}
+
+.item img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+
+/* Titulo de item */
+.item h2{
+
+    /* Limites del titulo */
+    max-width: 2.9cm;
+    max-height: .9cm;
+    overflow: hidden;
+    
+
+
+    /* Alineacion de titulo */
+    position: absolute;
+    font-size: 1rem;
+    top: 78%;
+    left: 50%;
+    transform: translate(-50%,0);
+
+
+    /* Letra */
+    text-align: center;
+    line-height: .4cm;
+
+    font-family: 'Roboto', sans-serif;
+
+    
+}
+
+/* Numero de item */
+.item span{
+    position: absolute;
+    top:.1cm;
+    left: .15cm;
+    font-family: 'Lobster', cursive;
+}
+
+
+/* reload-buttom -----------------------------------------------------------*/
+.reload-buttom{
+    position: relative;
+    display: block;
+    width: 2cm;
+    height: 2cm;
+    align-self: center;
+    transform: translate(-6cm,0);
+    cursor: pointer;
+    border-radius: 20%;
+    transition: .2s;
+    background-color: lightgreen;
+    
+}
+
+.reload-buttom img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+
+}
+
+.reload-buttom:active{
+    box-shadow: 0 0 100px khaki ;
+}

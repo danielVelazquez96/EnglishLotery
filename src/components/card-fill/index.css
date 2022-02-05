@@ -88,7 +88,7 @@
     width: 2cm;
     height: 2cm;
     align-self: center;
-    transform: translate(-6cm,0);
+    /* transform: translate(-6cm,0); */
     cursor: pointer;
     border-radius: 20%;
     transition: .2s;
@@ -107,3 +107,19 @@
 .reload-buttom:active{
     box-shadow: 0 0 100px khaki ;
 }
+
+@media (max-width: 900px) {
+    .main{
+        justify-content: space-evenly;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .reload-buttom{
+        margin-top: 1cm;
+    }
+
+}
+
+
+
+

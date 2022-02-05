@@ -21,6 +21,7 @@
 .cards .items{
     position: relative;
     border: solid black 2px;
+    height: 7cm;
 }
 
 /* Imagen del item */

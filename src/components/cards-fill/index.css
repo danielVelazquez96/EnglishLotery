@@ -1,6 +1,6 @@
 
 .cards{
-    /* general properties */
+    /* standar properties */
     margin: 50px auto;
     height: auto;
     width: 88.5vw;
@@ -24,7 +24,7 @@
     height: 7cm;
 }
 
-/* Imagen del item */
+/* Item image */
 .items img{
     position: absolute;
     width: 100%;
@@ -35,14 +35,14 @@
 /* Titulo de item */
 .items h2{
 
-    /* Limites del titulo */
+    /* title limits */
     max-width: 4.9cm;
     max-height: 50cm;
     overflow: hidden;
     
 
 
-    /* Alineacion de titulo */
+    /*title alignment */
     position: absolute;
     font-size: 1rem;
     top: 78%;
@@ -50,20 +50,18 @@
     transform: translate(-50%,0);
 
 
-    /* Letra */
+    /* Lirycs format*/
     text-align: center;
     line-height: .8cm;
     font-size: 30px;
-    /* color:purple; */
-    
     font-family: 'Roboto', sans-serif;
    
     
-    /* background-color: red; */
+
     
 }
 
-/* Numero de item */
+/* item number */
 .items span{
     position: absolute;
     top:.1cm;

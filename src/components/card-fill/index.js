@@ -1,11 +1,11 @@
 import React from 'react';
-import './index.css';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
+import ReactDOM from 'react-dom';
+import './index.css';
 
-class Cardfill extends React.Component{
+export class Cardfill extends React.Component{
 
-    constructor(props,name){
+    constructor(props){
         super(props);
         this.cardNames=[];
         this.cardUrl=[];

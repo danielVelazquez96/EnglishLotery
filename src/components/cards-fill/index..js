@@ -6,14 +6,12 @@ import './index.css';
 
 
 class Cardsfill extends React.Component{
-    constructor(props,name){
+    constructor(props){
         super(props);
         this.cardNames=[];
         this.cardUrl=[];
         this.init();
     }
-
-
 
     init=()=>{
         this.apiGet();
@@ -43,7 +41,7 @@ class Cardsfill extends React.Component{
                         }
                         </React.Fragment>
 
-        ReactDOM.render(element,document.querySelector(".cards"))
+        ReactDOM.render(element,document.querySelector(".cards"));
 
     }
 

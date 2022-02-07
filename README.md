@@ -1,4 +1,4 @@
-# English lotery Proyect
+# English Lotery Proyect
 
 ![](/ReadmeImage.jpg)
 
@@ -21,5 +21,5 @@ The object of this project was learn the basic of MERN aplication and in the sam
 - Deploy the progam on internet
 - Deploy the appi created 
 (https://github.com/danielVelazquez96/EnglisLoteryBackend)
--The users can personalize their own lotery uploading their images and titles.
+- The users can personalize their own lotery uploading their images and titles.
 

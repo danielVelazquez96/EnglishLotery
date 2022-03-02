@@ -2,63 +2,55 @@
 
 import React from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom';
 import './index.css';
 
 
 class Cardsfill extends React.Component{
+    
+    
     constructor(props){
         super(props);
-        // Variables that going to save information from Mongo DB
+        //state of dataBase data is get it or not
+        this.state={data:0};
+        // Variables that going to save information of names of URL(images on cloudinary) from Mongo DB
         this.cardNames=[];
         this.cardUrl=[];
-        //initial function of the component
-        this.init();
+        this.apiGet()
     }
 
-    init=()=>{
-        this.apiGet();
-    }
+
     
     // Funtion to get information from the API
     apiGet=async()=>{
         // variable to endpoint url
         const urlApi=`http://localhost:5000/getData`;
-
-        // Get data from the API
-        let data=await axios.get(urlApi)
+        try{
+            // Get data from the API
+            let data=await axios.get(urlApi)
             .then(response => {
                 return response.data;
             })
             .catch(console.log);
 
-        data.forEach(element => {
+            data.forEach(element => {
             this.cardNames.push(element.name);
             this.cardUrl.push(element.url);
-        });
+            });
+            // change status
+            this.setState({data:1});
+        }catch(e){
+            console.error(e.message);
+        }
         
-        // Create template 
-        const element= <React.Fragment>
-                        {
-                            this.cardNames.map((name,index)=>{
-                                return(
-                                    <this.createCard key={index} number={index}></this.createCard>
-                                )
-                            })
-                        }
-                        </React.Fragment>
-
-        // render template
-        ReactDOM.render(element,document.querySelector(".cards"));
-
+        
     }
 
     // Templeate for a single card
-    createCard=(props)=>{
+    createCard=({name,number,url})=>{
         const element=<div className="items">
-                        <img src={this.cardUrl[props.number]} alt="img" />
-                        <h2 >{this.cardNames[props.number]}</h2>
-                        <span>{props.number+1}</span>
+                        <img src={url} alt="img" />
+                        <h2 >{name}</h2>
+                        <span>{number+1}</span>
                     </div>
         return element;
     }
@@ -66,20 +58,21 @@ class Cardsfill extends React.Component{
 
 
     render(){
+       
         return(
-            
             <div className="cards" id="cards">
-
                 {
-                    this.cardNames.map((name,index)=>{
-                        return(
-                            <this.createCard key={index} number={index}></this.createCard>
-                        )
-                    })
+                        this.cardNames.map((name,index)=>{
+                            return(
+                                <this.createCard key={index} number={index} name={name} url={this.cardUrl[index]}/>
+                            )
+                        })
                 }
+                
             </div>
-            
-        );
+        )
+        
+        
     }
 }
 

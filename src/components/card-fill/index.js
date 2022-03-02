@@ -1,9 +1,7 @@
 // This componente create a big card with 16 little cards like in the lotery, those card are select randomly.
 // Create a button that create all big card again.
-
 import React from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom';
 import './index.css';
 
 // reload button image
@@ -11,18 +9,47 @@ import reloadButton from '../../assets/images/re-load.png';
 class Cardfill extends React.Component{
 
     constructor(props){
+        
         super(props);
+        this.state={data:0};
         // Variables that going to save information from Mongo DB
         this.cardNames=[];
-        this.cardUrl=[];
-        // array to no repeat cards in the big card
-        this.cardsSelected=[];
+        this.cardsUrls=[];
         //initial function of the component
-        this.init();
+        this.apiGet();
     }
 
-    init(){
-        this.apiGet();
+
+     // Templeate for a single card
+    createCard=({number})=>{
+        const element=<div className="item">
+                            <img src={this.cardsUrls[number-1]} alt="img"/>
+                            <h2 >{this.cardNames[number-1]}</h2>
+                            <span>{number}</span>
+                        </div>;
+
+        return element;
+        
+    }
+
+    // Function that return array with 16 randomly numbers from 1 to 56
+    selectCards=()=>{
+        let cardsSelected=[];
+
+        for(let i=0;i<16;i++){
+            let number;
+            // get a random number between 1 from 56
+            do{
+                number=Math.floor(Math.random()*56+1);
+        
+            }while(cardsSelected.find(N=>N==number)) //condition to no repeat the same card
+    
+            // Variable to remind what card has been set it in the compnent and not repet a same card
+            cardsSelected.push(number);
+        }
+
+        // Return array with the number of 16 cards selected
+        return cardsSelected;
     }
 
     // Funtion to get information from the API
@@ -39,99 +66,41 @@ class Cardfill extends React.Component{
 
         data.forEach(element => {
             this.cardNames.push(element.name);
-            this.cardUrl.push(element.url);
+            this.cardsUrls.push(element.url);
         });
         
-        // Create template 
-        const element= <React.Fragment>
-                            <this.joinCards></this.joinCards>
-                            <div onClick={this.buttonReloadClick} className="reload-buttom" id="reload-buttom">
-                                <img  src={reloadButton} alt="reload"></img>
-                            </div>
-                        </React.Fragment>
-
-        // render template
-        ReactDOM.render(element,document.querySelector(".main"));
-
-    }
-
-    // Function that return a random number from 1 to 56
-    selectRandomCard=()=>{
-        let carSelect;
-        do{
-            carSelect=Math.floor(Math.random()*56+1);
-    
-        }while(this.cardsSelected.find(N=>N==carSelect)) //condition to no repeat the same card
-
-        // Variable to remind what card has been set it in the compnent and not repet a same card
-        this.cardsSelected.push(carSelect);
-
-        // Return card random that is not repet it.
-        return carSelect;
-    }
-
-    // Templeate for a single card
-    createCard=(props)=>{    
-        const element=<div className="item">
-                            <img src={this.cardUrl[props.number-1]} alt="img"/>
-                            <h2 >{this.cardNames[props.number-1]}</h2>
-                            <span>{props.number}</span>
-                        </div>;
-
-        return element;
         
-    }
+        this.setState({data:1});
 
-    // Combine all 16 individual cards that has to be render in that big card
-    joinCards=()=>{
-        const element=<div className="card" id="card">
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                        <this.createCard number={this.selectRandomCard()}></this.createCard>
-                    </div> 
-        
-        this.cardsSelected=[];
-
-        return element;
     }
 
     // button event that make render the big card with diferents cards
     buttonReloadClick=()=>{
-        // create template
-        const element=<React.Fragment>
-                            <this.joinCards></this.joinCards>
-                            <div onClick={this.buttonReloadClick} className="reload-buttom" id="reload-buttom">
-                                <img  src={reloadButton} alt="reload"></img>
-                            </div>
-                        </React.Fragment>
-        // Render templeate
-        ReactDOM.render(element,document.querySelector('.main'))
+        this.setState({data:1});
     }
 
-
     render(){
+   
         return(
             <div className="main" >
-                <this.joinCards></this.joinCards>
+                <div className="card" id="card">
+                         {
+                             this.selectCards().map((element,index)=>{
+                                 return(
+                                     <this.createCard key={index} number={element}/>
+                                 )
+                             })
+                         }
+                </div> 
                 <div onClick={this.buttonReloadClick} className="reload-buttom" id="reload-buttom">
-                     <img  src={reloadButton} alt="reload"></img>
+                    <img  src={reloadButton} alt="reload"/>
                 </div>
-      
             </div>
         );
+
+        
+       
+       
     }
 }
 

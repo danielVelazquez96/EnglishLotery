@@ -10,9 +10,9 @@ import Cardsfill from './components/cards-fill';
 function App() {
   return (
     <div className="App">
-      <Header></Header>
-      <Cardfill></Cardfill>
-      <Cardsfill></Cardsfill>
+      <Header/>
+      <Cardfill/>
+      <Cardsfill/>
       
     </div>
   );

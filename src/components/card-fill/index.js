@@ -11,25 +11,26 @@ class Cardfill extends React.Component{
     constructor(props){
         
         super(props);
-        this.state={data:0};
+        this.state={
+            data:0,
+            reload:0
+        };
         // Variables that going to save information from Mongo DB
         this.cardNames=[];
-        this.cardsUrls=[];
-        //initial function of the component
-        this.apiGet();
+        this.cardUrl=[];
+        
     }
 
 
      // Templeate for a single card
-    createCard=({number})=>{
+     createCard=({number})=>{
+         
         const element=<div className="item">
-                            <img src={this.cardsUrls[number-1]} alt="img"/>
-                            <h2 >{this.cardNames[number-1]}</h2>
-                            <span>{number}</span>
-                        </div>;
-
+                        <img src={this.cardUrl[number-1]} alt="img" />
+                        <h2 >{this.cardNames[number-1]}</h2>
+                        <span>{number}</span>
+                    </div>
         return element;
-        
     }
 
     // Function that return array with 16 randomly numbers from 1 to 56
@@ -48,6 +49,7 @@ class Cardfill extends React.Component{
             cardsSelected.push(number);
         }
 
+        
         // Return array with the number of 16 cards selected
         return cardsSelected;
     }
@@ -58,50 +60,51 @@ class Cardfill extends React.Component{
         const urlApi=`http://localhost:5000/getData`;
 
         // Get data from the API
-        let data=await axios.get(urlApi)
+        const data=await axios.get(urlApi)
             .then(response => {
                 return response.data;
             })
             .catch(console.log);
+        
+        data.map((element)=>{
+            this.cardNames.push(element.name)
+            this.cardUrl.push(element.url)
+        })
 
-        data.forEach(element => {
-            this.cardNames.push(element.name);
-            this.cardsUrls.push(element.url);
-        });
-        
-        
         this.setState({data:1});
 
     }
 
-    // button event that make render the big card with diferents cards
-    buttonReloadClick=()=>{
-        this.setState({data:1});
+    componentDidMount(){
+        this.apiGet()    
     }
 
     render(){
-   
+
         return(
             <div className="main" >
                 <div className="card" id="card">
                          {
-                             this.selectCards().map((element,index)=>{
-                                 return(
-                                     <this.createCard key={index} number={element}/>
+                             this.selectCards().map((randomNum,index)=>{
+                                return(
+                                     <this.createCard 
+                                        key={index} 
+                                        number={randomNum}
+                                     />
                                  )
                              })
                          }
                 </div> 
-                <div onClick={this.buttonReloadClick} className="reload-buttom" id="reload-buttom">
+                <div onClick={()=>this.setState({reload:1})} className="reload-buttom" id="reload-buttom">
                     <img  src={reloadButton} alt="reload"/>
                 </div>
             </div>
-        );
-
+        ); 
+        
         
        
-       
     }
+
 }
 
 
